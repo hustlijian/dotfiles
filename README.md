@@ -27,3 +27,5 @@ Q1: I got the following errors when I use `sudo vim filename`:
 
 A1: You should always use `sudoedit filename` or `sudo -e filename` instead. See more: [http://superuser.com/questions/23428/vim-sudo-vim-bad-idea](http://superuser.com/questions/23428/vim-sudo-vim-bad-idea)
 
+##REF
+[luin](https://github.com/luin/dotfiles)
