@@ -1,0 +1,33 @@
+[user]
+    name = lijian
+    email = hustlijian@hust.edu.cn
+
+[color]
+#开启着色功能
+    status = auto
+    diff = auto
+    branch = auto
+    interactive = auto
+    ui = true
+
+[merge]
+#默认 merge 都加上 --no-ff
+    ff = false
+    tool = tortoisemerge
+[alias]
+#别名
+    st = status
+    ci = "commit -m"
+    br = branch                                                                                                                              
+    co = checkout
+    cia = "commit -am"
+    df = diff
+    dt = difftool
+    mg = merge
+    mt = mergetool
+    ll = "log --oneline"
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[core]
+	editor = vim
+[help]
+    autocorrect = 1

@@ -5,9 +5,10 @@ vundle=git://github.com/gmarik/vundle.git
 dest=~/.llijian_dotfiles
 
 all:install	
-install: download vim
+install: download vim git
 
 install-vim: download vim
+install-git: download git
 
 download:
 	@rm -rf $(dest)
@@ -18,3 +19,6 @@ vim:
 	@rm -rf ~/vim/bundle/vundle
 	git clone -q $(vundle) ~/.vim/bundle/vundle
 	@vim +BundleInstall +qall
+
+git:
+	ln -fs $(dest)/gitconfig ~/.gitconfig
