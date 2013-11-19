@@ -1,5 +1,5 @@
 ## About
-My dotfiles (tested to work on linux/windows).
+My dotfiles (tested to work on linux/cygwin).
 
 ![image](https://raw.github.com/hustlijian/dotfiles/master/images/vim.png)
 
