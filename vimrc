@@ -20,6 +20,7 @@ set ai         " always set autoindenting on
 set viminfo='20,\"50    " read/write a .viminfo file, don't store more
 set history=200     " keep 50 lines of command line history
 set number
+set showcmd     " show command in status line
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -35,6 +36,12 @@ set hlsearch
 set mouse=a  "enable the mouse,use shift+click to paste text
 syntax on
 
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 
 "======================================
 "personal settings
@@ -45,8 +52,16 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
 " Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l/%L:%c
 
 " Map auto complete of (, ", ', [
 inoremap ( ()<Esc>i
@@ -149,6 +164,7 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'octol/vim-cpp-enhanced-highlight'
 
 " vim-scripts repos
 Bundle 'taglist.vim'
@@ -179,7 +195,7 @@ let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 2
+let g:neocomplcache_min_syntax_length = 1
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Enable heavy features.
@@ -209,9 +225,9 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
+  "return neocomplcache#smart_close_popup() . "\<CR>"
   " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
