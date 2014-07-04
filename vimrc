@@ -9,7 +9,6 @@ endif
 set nocompatible    " Use Vim defaults (much better!)
 set bs=indent,eol,start        " allow backspacing over everything in insert mode
     
-set history=50        " keep 50 lines of command line history
 set ruler        " show the cursor position all the time
 filetype plugin on
 filetype plugin indent on
@@ -18,9 +17,8 @@ set nocompatible    " Use Vim defaults (much better!)
 set bs=indent,eol,start     " allow backspacing over everything in insert mode
 set ai         " always set autoindenting on
 set viminfo='20,\"50    " read/write a .viminfo file, don't store more
-set history=200     " keep 50 lines of command line history
+set history=200     " keep 200 lines of command line history
 set number
-set showcmd     " show command in status line
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -34,6 +32,8 @@ setlocal noswapfile
 set showmatch
 set hlsearch
 set mouse=a  "enable the mouse,use shift+click to paste text
+set wildmenu
+set wildmode=full "set the cmd complete mode
 syntax on
 
 " Uncomment the following to have Vim jump to the last position when
@@ -120,7 +120,6 @@ map <silent> <F9> :TlistToggle<cr>
 "colorscheme morning
 colorscheme desert
 "olorschem solarized
-"colorscheme molokai
 
 "======================================
 "plugin settings
@@ -142,15 +141,47 @@ if has("cscope") && filereadable("/usr/bin/cscope")
 endif
 
 "for vundle
-set nocompatible               " be iMproved
- filetype off                   " required!
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
 
 " My Bundles here:
 "
@@ -160,7 +191,6 @@ Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/neocomplcache.vim'
 Bundle 'Shougo/neosnippet'
 Bundle 'oscarh/vimerl'
-Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-easymotion'
@@ -168,6 +198,8 @@ Bundle 'octol/vim-cpp-enhanced-highlight'
 
 " vim-scripts repos
 Bundle 'taglist.vim'
+" smooth scroll
+Bundle 'yonchu/accelerated-smooth-scroll'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -175,7 +207,7 @@ Bundle 'taglist.vim'
 "Bundle 'file:///Users/gmarik/path/to/plugin'
 " ...
 
- filetype plugin indent on     " required!
+filetype plugin indent on     " required!
 "
 " Brief help
  " :BundleList          - list configured bundles
@@ -297,6 +329,7 @@ if has('conceal')
 endif
 
 "for rainbow_parentheses
+Bundle 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -331,3 +364,14 @@ let g:indentLine_char = '|'
 let g:mapleader=','
 ",, + w ,jump
 ",, + fe ,find 'e',goto this char
+"
+"
+autocmd FileType python setlocal et sta sw=4 sts=4
+
+" All of your Plugins must be added before the following line
+" for vundle
+call vundle#end()            " required
+
+"extra settings
+"========================
+set showcmd 
