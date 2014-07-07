@@ -193,7 +193,6 @@ Bundle 'Shougo/neosnippet'
 Bundle 'oscarh/vimerl'
 Bundle 'Yggdroot/indentLine'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'octol/vim-cpp-enhanced-highlight'
 
 " vim-scripts repos
@@ -360,12 +359,6 @@ let g:indentLine_noConcealCursor = 1
 let g:indentLine_color_term =239
 let g:indentLine_char = '|'
 
-"for vim-easymotion
-let g:mapleader=','
-",, + w ,jump
-",, + fe ,find 'e',goto this char
-"
-"
 autocmd FileType python setlocal et sta sw=4 sts=4
 
 " All of your Plugins must be added before the following line
