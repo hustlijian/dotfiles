@@ -17,8 +17,8 @@ download:
 vim:
 	ln -fs $(dest)/vimrc ~/.vimrc
 	@rm -rf ~/vim/bundle/vundle
-	git clone -q $(vundle) ~/.vim/bundle/vundle
-	@vim +BundleInstall +qall
+	git clone -q $(vundle)  ~/.vim/bundle/Vundle.vim
+	@vim +PluginInstall +qall
 
 git:
 	ln -fs $(dest)/gitconfig ~/.gitconfig
