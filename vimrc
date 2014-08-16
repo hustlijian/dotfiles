@@ -1,12 +1,12 @@
+"=============================
+"encoding settings
 "编码设置
+"=============================
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 "==============================
 "vim settings
 "==============================
-set nocompatible    " Use Vim defaults (much better!)
-set bs=indent,eol,start        " allow backspacing over everything in insert mode
-    
 set ruler        " show the cursor position all the time
 filetype plugin on
 filetype plugin indent on
@@ -188,7 +188,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/neocomplcache.vim'
 Bundle 'Shougo/neosnippet'
-Bundle 'oscarh/vimerl'
+Bundle 'Shougo/neosnippet-snippets'
 Bundle 'Yggdroot/indentLine'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'octol/vim-cpp-enhanced-highlight'
