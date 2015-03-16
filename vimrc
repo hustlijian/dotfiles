@@ -58,8 +58,9 @@ function! HasPaste()
     return ''
 endfunction
 
-" Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l/%L:%c
+" Format the statusline, always show
+""set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ %l/%L:%c\ \ %y
+set laststatus=2
 
 " Map auto complete of (, ", ', [
 inoremap ( ()<Esc>i
@@ -72,7 +73,7 @@ inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
 
-function ClosePair(char)
+function! ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>"
     else
@@ -80,7 +81,7 @@ function ClosePair(char)
     endif
 endf
 
-function CloseBracket()
+function! CloseBracket()
     if match(getline(line('.') + 1), '\s*}') < 0
         return "\<CR>}"
     else
@@ -88,7 +89,7 @@ function CloseBracket()
     endif
 endf
 
-function QuoteDelim(char)
+function! QuoteDelim(char)
     let line = getline('.')
     let col = col('.')
     if line[col - 2] == "\\"
@@ -151,36 +152,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-
 " My Bundles here:
 "
 " original repos on github
@@ -192,11 +163,14 @@ Bundle 'Shougo/neosnippet-snippets'
 Bundle 'Yggdroot/indentLine'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'octol/vim-cpp-enhanced-highlight'
+Plugin 'klen/python-mode'
+""Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
 
 " vim-scripts repos
 Bundle 'taglist.vim'
-" smooth scroll
-Bundle 'yonchu/accelerated-smooth-scroll'
+Plugin 'python.vim'
+Plugin 'bling/vim-airline'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -229,9 +203,9 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Enable heavy features.
 " Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 1
 " Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -359,6 +333,13 @@ let g:indentLine_char = '|'
 
 autocmd FileType python setlocal et sta sw=4 sts=4
 
+"for ctrlp
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|pyc)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }     " MacOSX/Linux"
+
 " All of your Plugins must be added before the following line
 " for vundle
 call vundle#end()            " required
@@ -366,3 +347,13 @@ call vundle#end()            " required
 "extra settings
 "========================
 set showcmd 
+
+" set clipboard for osx
+" http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
+nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
+ 
+" hot strings, use `abbreviation`
+iabbrev @g; hustlijian@gmail.com
+iabbrev hj; hustlijian
+iabbrev @q; hustlijian@qq.com
