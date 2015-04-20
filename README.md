@@ -4,21 +4,30 @@ My dotfiles (tested to work on linux/cygwin).
 ![image](https://raw.github.com/hustlijian/dotfiles/master/images/vim.png)
 
 ## Install
+
 > **WARNING** You should backup your dotfiles(.vimrc, .vim/*) first.
 
-To install all dotfiles:
-  
-  ```
-  wget https://raw.github.com/hustlijian/dotfiles/master/Makefile -O - | make -- install
-  ```
+#### 1. Clone the repository:
 
-Just wanna install vim files:
+    git clone https://github.com/hustlijian/dotfiles.git
+    cd dotfiles
 
-  ```
-  wget https://raw.github.com/hustlijian/dotfiles/master/Makefile -O - | make -- install-vim
-  ```
+#### 2. Install 
+
+##### 2.1 Install vim 
+
+    make vim
+
+##### 2.2 Install gitconfig
+
+    make git
+
+##### 2.3 Install zsh
+
+    make zsh
 
 ## FAQ
+
 Q1: I got the following errors when I use `sudo vim filename`:
 
     Error detected while processing /Users/username/.vim/bundle/neocomplcache/plugin/neocomplcache.vim:
