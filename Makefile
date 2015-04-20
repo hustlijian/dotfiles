@@ -7,13 +7,13 @@ install: vim git zsh
 
 vim:
 	ln -fs $(dest)/vimrc ~/.vimrc
-	git clone -q $(vundle)  ~/.vim/bundle/Vundle.vim
+	git clone  $(vundle)  ~/.vim/bundle/Vundle.vim
 	@vim +PluginInstall +qall
 
 git:
 	ln -fs $(dest)/gitconfig ~/.gitconfig
 
 zsh:
-	git clone -q $(ohzsh)  ~/.oh-my-zsh
+	git clone $(ohzsh) ~/.oh-my-zsh
 	ln -fs $(dest)/zshrc ~/.zshrc
 	chsh -s /bin/zsh
