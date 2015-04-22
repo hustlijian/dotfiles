@@ -47,7 +47,7 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx autojump)
+plugins=(git git-flow github osx autojump brew python history-substring-search tmux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,6 +113,4 @@ alias p="ping baidu.com"
 alias subl="'/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'"
 
 # fortune
-echo
 fortune -e tang gushi songci
-echo
