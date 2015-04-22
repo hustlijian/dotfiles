@@ -17,3 +17,7 @@ zsh:
 	git clone $(ohzsh) ~/.oh-my-zsh
 	ln -fs $(dest)/zshrc ~/.zshrc
 	chsh -s /bin/zsh
+
+tmux:
+	brew install tmux
+	ln -fs $(dest)/tmux.conf ~/.tmux.conf
