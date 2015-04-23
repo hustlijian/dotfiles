@@ -1,5 +1,5 @@
 ## About
-My dotfiles (tested to work on linux/cygwin).
+My dotfiles (tested to work on linux/mac).
 
 ![zsh](https://raw.github.com/hustlijian/dotfiles/master/images/zsh.gif)
 
