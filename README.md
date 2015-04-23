@@ -1,7 +1,7 @@
 ## About
 My dotfiles (tested to work on linux/cygwin).
 
-![image](https://raw.github.com/hustlijian/dotfiles/master/images/vim.png)
+![zsh](https://raw.github.com/hustlijian/dotfiles/master/images/zsh.gif)
 
 ## Install
 
@@ -25,6 +25,15 @@ My dotfiles (tested to work on linux/cygwin).
 ##### 2.3 Install zsh
 
     make zsh
+
+## preview
+
+![vim](https://raw.github.com/hustlijian/dotfiles/master/images/vim.png)
+
+---
+
+![tmux](https://raw.github.com/hustlijian/dotfiles/master/images/tmux.png)
+
 
 ## FAQ
 
