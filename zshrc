@@ -95,6 +95,8 @@ export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2375
 
 # set encoding
 export LANG="en_US.UTF-8"
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # set gopath
 export GOPATH=$HOME/local/golang
@@ -102,11 +104,10 @@ export PATH=$PATH:$GOPATH/bin
 export SVN_EDITOR=vim
 
 # set java home
-export JAVA_HOME=$(/usr/libexec/java_home)
+[ -f /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home)
 
 # set local path
-export PATH=$PATH:$HOME/local/bin
-alias m="sudo mentohust -k; sudo mentohust"
+export PATH=$PATH:$HOME/local/bin:/usr/games/
 alias p="ping baidu.com"
 
 # set sublime text
