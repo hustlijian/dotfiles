@@ -2,8 +2,15 @@ vundle=git://github.com/gmarik/vundle.git
 ohzsh=git://github.com/robbyrussell/oh-my-zsh.git
 dest=$(shell pwd)
 
-all:install	
 install: vim git zsh
+update:
+	git pull
+	@vim +PluginInstall +qall
+	ln -fs $(dest)/vimrc ~/.vimrc
+	ln -fs $(dest)/gitconfig ~/.gitconfig
+	ln -fs $(dest)/zshrc ~/.zshrc
+	ln -fs $(dest)/tmux.conf ~/.tmux.conf
+
 
 vim:
 	ln -fs $(dest)/vimrc ~/.vimrc
