@@ -1,0 +1,37 @@
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Compiled Python files
+*.pyc
+
+# Compiled C++ files
+*.out
+
+# Application specific files
+venv
+node_modules
+.sass-cache
+tags
+cscope.in.out
+cscope.out
+cscope.po.out
+
+# Debug files
+*.dSYM/
+
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]

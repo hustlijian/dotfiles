@@ -8,6 +8,7 @@ update:
 	@vim +PluginInstall +qall
 	ln -fs $(dest)/vimrc ~/.vimrc
 	ln -fs $(dest)/gitconfig ~/.gitconfig
+	ln -fs $(dest)/gitignore ~/.gitignore
 	ln -fs $(dest)/zshrc ~/.zshrc
 	ln -fs $(dest)/tmux.conf ~/.tmux.conf
 
@@ -19,6 +20,7 @@ vim:
 
 git:
 	ln -fs $(dest)/gitconfig ~/.gitconfig
+	ln -fs $(dest)/gitignore ~/.gitignore
 
 zsh:
 	git clone $(ohzsh) ~/.oh-my-zsh
