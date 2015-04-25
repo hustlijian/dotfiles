@@ -50,6 +50,41 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" set Leader to <space>
+let mapleader=" "
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
+
+" Tab completion
+" will insert tab at beginning of line,
+" will use completion if not at beginning
+set wildmode=list:longest,list:full
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-p>
+
+" Index ctags from any project
+map <Leader>ct :!ctags -R .<CR>
+
+" Easy write and quit file
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" set clipboard for osx
+" http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
+vnoremap <Leader>y y:call system("pbcopy", getreg("\""))<CR>
+nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
+nnoremap <Leader>p :call setreg("\"", system("pbpaste"))<CR>p
+
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -282,6 +317,17 @@ Plugin 'kien/ctrlp.vim' "{
       \ 'file': '\v\.(exe|so|dll|pyc)$',
       \ 'link': 'some_bad_symbolic_links',
       \ }     " MacOSX/Linux"
+    let g:ctrlp_use_caching = 0
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+    if executable('ag')
+        set grepprg=ag\ --nogroup\ --nocolor
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    else
+      let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+      let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+        \ }
+    endif
 "}
 
 Plugin 'justinmk/vim-sneak' "{
@@ -350,11 +396,3 @@ call vundle#end()            " required
 "extra settings
 "========================
 set showcmd 
-
-noremap YY "+y<CR>
-noremap P "+gP<CR>
-noremap XX "+x<CR>
-" set clipboard for osx
-" http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
-vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
-nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
