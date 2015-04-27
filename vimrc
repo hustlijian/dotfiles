@@ -148,7 +148,6 @@ map 0 ^
 "colorscheme evening
 "colorscheme morning
 colorscheme desert
-"colorscheme solarized
 
 "======================================
 "plugin settings
@@ -181,6 +180,25 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+
+
+" non github repos
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (ie. when working on your own plugin)
+"Plugin 'file:///Users/gmarik/path/to/plugin'
+" ...
+
+filetype plugin indent on     " required!
+
+"
+" Brief help
+ " :PluginList          - list configured bundles
+ " :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+ " :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Plugin command are not allowed..
 
 " My Plugins here:
 "
@@ -306,7 +324,7 @@ Plugin 'Yggdroot/indentLine' "{
 
     autocmd FileType python setlocal et sta sw=4 sts=4
 "}
-Plugin 'altercation/vim-colors-solarized'
+
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'klen/python-mode'
 ""Plugin 'Valloric/YouCompleteMe'
@@ -341,25 +359,6 @@ Plugin 'taglist.vim' "{
 "}"
 Plugin 'python.vim'
 Plugin 'bling/vim-airline'
-
-" non github repos
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (ie. when working on your own plugin)
-"Plugin 'file:///Users/gmarik/path/to/plugin'
-" ...
-
-filetype plugin indent on     " required!
-"
-" Brief help
- " :PluginList          - list configured bundles
- " :PluginInstall(!)    - install(update) bundles
-" :PluginSearch(!) foo - search(or refresh cache first) for foo
- " :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Plugin command are not allowed..
-
-
 "for rainbow_parentheses
 Plugin 'kien/rainbow_parentheses.vim' "{
     let g:rbpt_colorpairs = [
@@ -387,7 +386,6 @@ Plugin 'kien/rainbow_parentheses.vim' "{
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
 "}
-
 
 " All of your Plugins must be added before the following line
 " for vundle
