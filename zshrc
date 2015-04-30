@@ -114,4 +114,4 @@ alias p="ping baidu.com"
 alias subl="'/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'"
 
 # fortune
-fortune -e tang gushi songci
+fortune -e tang gushi songci 2>/dev/null
