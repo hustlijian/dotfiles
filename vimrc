@@ -78,8 +78,12 @@ map <Leader>ct :!ctags -R .<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+
 " set clipboard for osx
 " http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+
 vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
 vnoremap <Leader>y y:call system("pbcopy", getreg("\""))<CR>
 nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
