@@ -53,9 +53,6 @@ map <C-l> <C-W>l
 " set Leader to <space>
 let mapleader=" "
 
-" Display extra whitespace
-set list listchars=tab:»·,trail:·
-
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
