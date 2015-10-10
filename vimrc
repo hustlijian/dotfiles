@@ -1,59 +1,76 @@
-"=============================
-"encoding settings
-"编码设置
-"=============================
+" author: lijian
+
+" 设置命令前缀{{{
+" set Leader to <space>
+let mapleader=" "
+" }}}
+" 编码设置 {{{
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-"==============================
-"vim settings
-"==============================
-set ruler        " show the cursor position all the time
-filetype plugin on
-filetype plugin indent on
-setf c
-set nocompatible    " Use Vim defaults (much better!)
-set bs=indent,eol,start     " allow backspacing over everything in insert mode
-set ai         " always set autoindenting on
-set viminfo='20,\"50    " read/write a .viminfo file, don't store more
-set history=200     " keep 200 lines of command line history
-set number
+" }}}
+" 空格和对齐 {{{
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set incsearch
-set smartindent
-set cursorline
-set ignorecase smartcase
-set sw=4    
 set expandtab
-setlocal noswapfile
-set showmatch
-set hlsearch
-set mouse=a  "enable the mouse,use shift+click to paste text
+set smartindent
+filetype plugin on
+filetype plugin indent on
+setf c
+set bs=indent,eol,start     " allow backspacing over everything in insert mode
+set ai         " always set autoindenting on
+" }}}
+" 界面样式 {{{
+set number
+set cursorline
 set wildmenu
 set wildmode=full "set the cmd complete mode
-syntax on
-
+set laststatus=2
+" }}}
+" 查找 {{{
+set incsearch
+set showmatch
+set hlsearch
+set ignorecase smartcase
+" }}}
+" 启动鼠标{{{
+set mouse=a  "enable the mouse,use shift+click to paste text
+" }}}
+" 存储信息{{{
+set viminfo='20,\"50    " read/write a .viminfo file, don't store more
+set history=200     " keep 200 lines of command line history
+setlocal noswapfile
+" }}}
+" 打开文件时重新定位到上次的位置{{{
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-
-"======================================
-"personal settings
-"======================================
+" }}}
+" 多窗口管理{{{
 " Smart way to move btw. windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+" }}}
+" 自定义快捷map{{{
+" Index ctags from any project
+map <Leader>ct :!ctags -R .<CR>
 
-" set Leader to <space>
-let mapleader=" "
+" Easy open write and quit file
+nnoremap <leader>o :CtrlP<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
 
-" Tab completion
+"Remap VIM 0
+map 0 ^
+
+"Enter visual line mode with <leader><leader>
+nmap <leader><leader> V
+" }}}
+" Tab 补齐{{{
 " will insert tab at beginning of line,
 " will use completion if not at beginning
 set wildmode=list:longest,list:full
@@ -67,37 +84,19 @@ function! InsertTabWrapper()
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-p>
-
-" Index ctags from any project
-map <Leader>ct :!ctags -R .<CR>
-
-" Easy write and quit file
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
-
+"}}}
+" 复制粘贴{{{
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 
 " set clipboard for osx
 " http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
-
 vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
 vnoremap <Leader>y y:call system("pbcopy", getreg("\""))<CR>
 nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
 nnoremap <Leader>p :call setreg("\"", system("pbpaste"))<CR>p
-
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
-endfunction
-
-" Format the statusline, always show
-""set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ %l/%L:%c\ \ %y
-set laststatus=2
-
+" }}}
+" 自动补齐(,",' {{{
 " Map auto complete of (, ", ', [
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
@@ -139,21 +138,15 @@ function! QuoteDelim(char)
         return a:char.a:char."\<Esc>i"
     endif
 endf
-
-"Remap VIM 0
-map 0 ^
-
-
+" }}}
+" 颜色主题{{{
 " set the color scheme
 "colorscheme elflord
 "colorscheme evening
 "colorscheme morning
 colorscheme desert
-
-"======================================
-"plugin settings
-"======================================
-"for cscope
+" }}}
+" cscope设置 {{{
 if has("cscope") && filereadable("/usr/bin/cscope")
    set csprg=/usr/bin/cscope
    set csto=0
@@ -168,8 +161,8 @@ if has("cscope") && filereadable("/usr/bin/cscope")
    endif
    set csverb
 endif
-
-"for vundle
+" }}}
+" vundle 设置开头{{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -200,17 +193,13 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Plugin command are not allowed..
-
-" My Plugins here:
-"
-" original repos on github
-Plugin 'scrooloose/nerdtree' "{
+"}}}
+Plugin 'scrooloose/nerdtree' "{{{
     "Map for NERDTree,F2 open tree list
     nmap <F2> :NERDTreeToggle <CR>
-"}
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-fugitive'
-Plugin 'Shougo/neocomplcache.vim' "{
+    nmap <Leader>n :NERDTreeToggle <CR>
+"}}}
+Plugin 'Shougo/neocomplcache.vim' "{{{
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
     " Use neocomplcache.
@@ -295,10 +284,8 @@ Plugin 'Shougo/neocomplcache.vim' "{
     let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
     let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
     let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"}
-
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets' "{
+"}}}
+Plugin 'Shougo/neosnippet-snippets' "{{{
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
     xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -315,22 +302,20 @@ Plugin 'Shougo/neosnippet-snippets' "{
     if has('conceal')
       set conceallevel=2 concealcursor=i
     endif
-""}"
-
-Plugin 'Yggdroot/indentLine' "{
+"}}}
+Plugin 'Yggdroot/indentLine' "{{{
     "for indentLine
     let g:indentLine_noConcealCursor = 1
     let g:indentLine_color_term =239
     let g:indentLine_char = '|'
 
     autocmd FileType python setlocal et sta sw=4 sts=4
-"}
-
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'klen/python-mode'
-""Plugin 'Valloric/YouCompleteMe'
-
-Plugin 'kien/ctrlp.vim' "{
+"}}}
+Plugin 'klen/python-mode' "{{{
+    let g:pymode_rope_lookup_project = 0
+    let g:pymode_rope=0
+"}}}
+Plugin 'kien/ctrlp.vim' "{{{
     let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn)$',
       \ 'file': '\v\.(exe|so|dll|pyc)$',
@@ -347,21 +332,16 @@ Plugin 'kien/ctrlp.vim' "{
         \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
         \ }
     endif
-"}
-
-Plugin 'justinmk/vim-sneak' "{
+"}}}
+Plugin 'justinmk/vim-sneak' "{{{
     ""let g:sneak#streak = 1
-"}
-
-" vim-scripts repos
-Plugin 'taglist.vim' "{
+"}}}
+Plugin 'taglist.vim' "{{{
     "Map for Taglist
-    map <silent> <F9> :TlistToggle<cr>
-"}"
-Plugin 'python.vim'
-Plugin 'bling/vim-airline'
-"for rainbow_parentheses
-Plugin 'kien/rainbow_parentheses.vim' "{
+    map <silent> <F9> :TlistToggle<CR>
+    nmap <Leader>t :TlistToggle<CR>
+"}}}
+Plugin 'kien/rainbow_parentheses.vim' "{{{
     let g:rbpt_colorpairs = [
         \ ['brown',       'RoyalBlue3'],
         \ ['Darkblue',    'SeaGreen3'],
@@ -386,12 +366,42 @@ Plugin 'kien/rainbow_parentheses.vim' "{
     au Syntax * RainbowParenthesesLoadRound
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
-"}
-
+"}}}
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Shougo/neosnippet'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'fatih/vim-go'
+Plugin 'rust-lang/rust.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'python.vim'
+Plugin 'bling/vim-airline'
+" vundle 配置结束{{{
 " All of your Plugins must be added before the following line
 " for vundle
 call vundle#end()            " required
+" }}}
 
+" 其它配置{{{
 "extra settings
-"========================
 set showcmd 
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+syntax on
+" }}}
+
+" Tmux 设置{{{
+"insert cursor on tmux
+if exists('$ITERM_PROFILE')
+  if exists('$TMUX') 
+    let &t_SI = "\<Esc>[3 q"
+    let &t_EI = "\<Esc>[0 q"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+end
+" }}}
+
+" 放在最后，指定本文件的折叠方式
+" vim:foldmethod=marker:foldlevel=0

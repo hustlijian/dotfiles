@@ -54,7 +54,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 #export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -115,3 +115,7 @@ alias subl="'/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'"
 
 # fortune
 fortune -e tang gushi songci 2>/dev/null
+
+# aliases for hadoop
+alias hstart="start-dfs.sh ; start-yarn.sh"
+alias hstop="stop-yarn.sh ; stop-dfs.sh"
