@@ -55,21 +55,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 " }}}
-" 自定义快捷map{{{
-" Index ctags from any project
-map <Leader>ct :!ctags -R .<CR>
-
-" Easy open write and quit file
-nnoremap <leader>o :CtrlP<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
-
-"Remap VIM 0
-map 0 ^
-
-"Enter visual line mode with <leader><leader>
-nmap <leader><leader> V
-" }}}
 " Tab 补齐{{{
 " will insert tab at beginning of line,
 " will use completion if not at beginning
@@ -85,60 +70,7 @@ endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-p>
 "}}}
-" 复制粘贴{{{
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
 
-" set clipboard for osx
-" http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
-vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
-vnoremap <Leader>y y:call system("pbcopy", getreg("\""))<CR>
-nnoremap \p :call setreg("\"", system("pbpaste"))<CR>p
-nnoremap <Leader>p :call setreg("\"", system("pbpaste"))<CR>p
-" }}}
-" 自动补齐(,",' {{{
-" Map auto complete of (, ", ', [
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {}<Esc>i
-autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=CloseBracket()<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
-
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
-
-function! CloseBracket()
-    if match(getline(line('.') + 1), '\s*}') < 0
-        return "\<CR>}"
-    else
-        return "\<Esc>j0f}a"
-    endif
-endf
-
-function! QuoteDelim(char)
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] == "\\"
-        "Inserting a quoted quotation mark into the string
-        return a:char
-    elseif line[col - 1] == a:char
-        "Escaping out of the string
-        return "\<Right>"
-    else
-        "Starting a string
-        return a:char.a:char."\<Esc>i"
-    endif
-endf
-" }}}
 " 颜色主题{{{
 " set the color scheme
 "colorscheme elflord
@@ -161,6 +93,15 @@ if has("cscope") && filereadable("/usr/bin/cscope")
    endif
    set csverb
 endif
+
+nnoremap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>   
+nnoremap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>   
+nnoremap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>   
+nnoremap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>   
+nnoremap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>   
+nnoremap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>   
+nnoremap <leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nnoremap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
 " }}}
 " vundle 设置开头{{{
 set nocompatible              " be iMproved, required
@@ -199,110 +140,6 @@ Plugin 'scrooloose/nerdtree' "{{{
     nmap <F2> :NERDTreeToggle <CR>
     nmap <Leader>n :NERDTreeToggle <CR>
 "}}}
-Plugin 'Shougo/neocomplcache.vim' "{{{
-    " Disable AutoComplPop.
-    let g:acp_enableAtStartup = 0
-    " Use neocomplcache.
-    let g:neocomplcache_enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplcache_enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplcache_min_syntax_length = 1
-    let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-    " Enable heavy features.
-    " Use camel case completion.
-    let g:neocomplcache_enable_camel_case_completion = 1
-    " Use underbar completion.
-    let g:neocomplcache_enable_underbar_completion = 1
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-    " Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplcache#undo_completion()
-    inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-    " Recommended key-mappings.
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-      "return neocomplcache#smart_close_popup() . "\<CR>"
-      " For no inserting <CR> key.
-      return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplcache#close_popup()
-    inoremap <expr><C-e>  neocomplcache#cancel_popup()
-    " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
-    " For cursor moving in insert mode(Not recommended)
-    " inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-    " inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-    " inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-    " inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-    " Or set this.
-    "let g:neocomplcache_enable_cursor_hold_i = 1
-    " Or set this.
-    "let g:neocomplcache_enable_insert_char_pre = 1
-
-    " AutoComplPop like behavior.
-    "let g:neocomplcache_enable_auto_select = 1
-
-    " Shell like behavior(not recommended).
-    "set completeopt+=longest
-    "let g:neocomplcache_enable_auto_select = 1
-    "let g:neocomplcache_disable_auto_complete = 1
-    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplcache_omni_patterns')
-      let g:neocomplcache_omni_patterns = {}
-    endif
-    let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"}}}
-Plugin 'Shougo/neosnippet-snippets' "{{{
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-    " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
-
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
-"}}}
 Plugin 'Yggdroot/indentLine' "{{{
     "for indentLine
     let g:indentLine_noConcealCursor = 1
@@ -311,9 +148,9 @@ Plugin 'Yggdroot/indentLine' "{{{
 
     autocmd FileType python setlocal et sta sw=4 sts=4
 "}}}
-Plugin 'klen/python-mode' "{{{
-    let g:pymode_rope_lookup_project = 0
-    let g:pymode_rope=0
+""Plugin 'klen/python-mode' "{{{
+""    let g:pymode_rope_lookup_project = 0
+""    let g:pymode_rope=0
 "}}}
 Plugin 'kien/ctrlp.vim' "{{{
     let g:ctrlp_custom_ignore = {
@@ -367,13 +204,42 @@ Plugin 'kien/rainbow_parentheses.vim' "{{{
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
 "}}}
-Plugin 'scrooloose/syntastic'
+"
+Plugin 'scrooloose/syntastic' "{{{
+    let g:syntastic_quiet_messages = {"level": "warnings"} 
+"}}}
+
+Plugin 'SirVer/ultisnips' "{{{
+    let g:UltiSnipsExpandTrigger = "<c-j>"
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"}}}
+Plugin 'honza/vim-snippets'
+
+Plugin 'Valloric/YouCompleteMe' "{{{
+    set completeopt-=preview                                                                                                                                                                 
+    let g:ycm_autoclose_preview_window_after_insertion = 1 
+    let g:ycm_autoclose_preview_window_after_completion = 1 
+    let g:ycm_add_preview_to_completeopt = 0 
+
+    let g:ycm_complete_in_comments = 1 
+    let g:ycm_confirm_extra_conf = 0 
+    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+    let g:ycm_min_num_of_chars_for_completion=1
+
+    nnoremap <F4> :YcmDiags<CR>
+    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+    nnoremap <C-g> :YcmCompleter GoTo<CR>
+    nnoremap <C-t> :YcmCompleter GetType<CR>
+    nnoremap <leader>ycmd :YcmCompleter GetDoc<CR>
+"}}}
+
 Plugin 'tpope/vim-fugitive'
-Plugin 'Shougo/neosnippet'
+""Plugin 'Shougo/neosnippet'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-""Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'
 ""Plugin 'rust-lang/rust.vim'
-Plugin 'godlygeek/tabular'
+""Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'python.vim'
 Plugin 'bling/vim-airline'
@@ -403,5 +269,28 @@ if exists('$ITERM_PROFILE')
 end
 " }}}
 
+" 自定义快捷map{{{
+" Index ctags from any project
+map <Leader>ct :!ctags -R .<CR>
+
+" Easy open write and quit file
+nnoremap <leader>o :CtrlP<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+"Remap VIM 0
+map 0 ^
+
+"Enter visual line mode with <leader><leader>
+nmap <leader><leader> V
+
+nnoremap <leader>p :set invpaste paste?<CR>
+nnoremap <leader>n :set invnumber<CR>
+nnoremap <leader>t :TlistToggle<CR>
+nnoremap <leader>l :NERDTreeToggle<CR>
+" }}}
+
 " 放在最后，指定本文件的折叠方式
 " vim:foldmethod=marker:foldlevel=0
+
+

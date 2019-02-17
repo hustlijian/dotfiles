@@ -119,3 +119,5 @@ fortune -e tang gushi songci 2>/dev/null
 # aliases for hadoop
 alias hstart="start-dfs.sh ; start-yarn.sh"
 alias hstop="stop-yarn.sh ; stop-dfs.sh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
