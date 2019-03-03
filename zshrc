@@ -121,3 +121,6 @@ alias hstart="start-dfs.sh ; start-yarn.sh"
 alias hstop="stop-yarn.sh ; stop-dfs.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# pip install git+https://github.com/jeffkaufman/icdiff.git
+[ -f /usr/bin/icdiff ] && alias diff=icdif

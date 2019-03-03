@@ -38,3 +38,5 @@
 	smudge = git media smudge %f
 [push]
 	default = matching
+[credential]
+	helper = store
